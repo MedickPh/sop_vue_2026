@@ -14,14 +14,15 @@
             <p class="user_callsign">{{ userData.callsign.toUpperCase() }}</p>
             <p class="is_wanted" v-if="shortData.is_wanted"> У РОЗШУКУ </p>
             <p v-if="shortData.is_wanted">Причина розшуку: {{ shortData.wanted_reason }}</p>
-            <p :class="{ 'green': userData.license_weapon }">Ліцензія на зброю {{ userData.license_weapon ? userData.license_weapon + ' рівня': '' }}</p>
+            <p :class="{ 'green': userData.license_weapon }">Ліцензія на зброю {{ userData.license_weapon ?
+                userData.license_weapon + ' рівня' : '' }}</p>
             <p :class="{ 'green': userData.license_fishing }">Ліцензія на риболовлю</p>
             <p :class="{ 'green': userData.lisence_huntering }">Ліцензія на полювання</p>
             <p :class="{ 'green': userData.license_artefact }">Ліцензія на артефакти</p>
             <p v-if="licenseDate">Ліцензія на перебування дійсна до {{ shortData.license_stay }}</p>
             <button @click="showFullInfo = true">Показати повну інформацію</button>
         </template>
-            <form action="" id="addUser" v-if="showFullInfo" @submit.prevent="sendChangedUserData">
+        <form action="" id="addUser" v-if="showFullInfo" @submit.prevent="sendChangedUserData">
             <p class="user_name">{{ userData.name.toUpperCase() }}</p>
             <p class="user_callsign">{{ userData.callsign.toUpperCase() }}</p>
             <p>Фракція</p>
@@ -45,13 +46,19 @@
                 <option value="30">30 днів</option>
             </select>
             <div class="lisenses">
-                <p :class="{ 'green': userData.license_fishing }">Ліцензія на риболовлю</p>
-                <input type="checkbox" id="license_fishing" autocomplete="off" v-model="userData.license_fishing">
-                <p :class="{ 'green': userData.lisence_huntering }">Ліцензія на полювання</p>
-                <input type="checkbox" id="lisence_huntering" autocomplete="off"
-                    v-model="userData.lisence_huntering">
-                <p :class="{ 'green': userData.license_artefact }">Ліцензія на артефакти</p>
+                <span>
+                    <p :class="{ 'green': userData.license_fishing }">Ліцензія <br> на риболовлю</p>
+                    <input type="checkbox" id="license_fishing" autocomplete="off" v-model="userData.license_fishing">
+                </span>
+                <span>
+                    <p :class="{ 'green': userData.lisence_huntering }">Ліцензія <br> на полювання</p>
+                    <input type="checkbox" id="lisence_huntering" autocomplete="off"
+                        v-model="userData.lisence_huntering">
+                </span>
+                <span>
+                    <p :class="{ 'green': userData.license_artefact }">Ліцензія <br> на артефакти</p>
                 <input type="checkbox" id="license_artefact" autocomplete="off" v-model="userData.license_artefact">
+                </span>
             </div>
             <p>Розшук</p>
             <select name="is_wanted" id="is_wanted" v-model="userData.is_wanted">
@@ -165,7 +172,7 @@ const sendChangedUserData = async () => {
         } else {
             const licenseStay = parseInt(userData.value.license_stay)
             userData.value.license_stay = getLicenseDates(licenseStay)
-        }        
+        }
         const createdUser = await changeUserData(userData.value.id, userData.value)
         if (createdUser) {
             router.back()
@@ -286,19 +293,17 @@ a {
 
 .lisenses {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     text-align: center;
-    margin: 15px 10px;
+    margin: 15px 0;
 }
 
 .lisenses p {
-    margin: 0 10px;
     font-size: 1rem;
 }
 
 .lisenses input {
     width: auto;
-    margin: 0 10px;
 }
-
 </style>

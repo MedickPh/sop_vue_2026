@@ -28,12 +28,19 @@
             <option value="30">30 днів</option>
         </select>
         <div class="lisenses">
-            <p :class="{ 'green': userDataForm.license_fishing }">Ліцензія на риболовлю</p>
-            <input type="checkbox" id="license_fishing" autocomplete="off" v-model="userDataForm.license_fishing">
-            <p :class="{ 'green': userDataForm.lisence_huntering }">Ліцензія на полювання</p>
-            <input type="checkbox" id="lisence_huntering" autocomplete="off" v-model="userDataForm.lisence_huntering">
-            <p :class="{ 'green': userDataForm.license_artefact }">Ліцензія на артефакти</p>
-            <input type="checkbox" id="license_artefact" autocomplete="off" v-model="userDataForm.license_artefact">
+            <span>
+                <p :class="{ 'green': userDataForm.license_fishing }">Ліцензія <br> на риболовлю</p>
+                <input type="checkbox" id="license_fishing" autocomplete="off" v-model="userDataForm.license_fishing">
+            </span>
+            <span>
+                <p :class="{ 'green': userDataForm.lisence_huntering }">Ліцензія <br> на полювання</p>
+                <input type="checkbox" id="lisence_huntering" autocomplete="off"
+                    v-model="userDataForm.lisence_huntering">
+            </span>
+            <span>
+                <p :class="{ 'green': userDataForm.license_artefact }">Ліцензія <br> на артефакти</p>
+                <input type="checkbox" id="license_artefact" autocomplete="off" v-model="userDataForm.license_artefact">
+            </span>
         </div>
         <p>Розшук</p>
         <select name="is_wanted" id="is_wanted" v-model="userDataForm.is_wanted">
@@ -198,11 +205,11 @@ a {
     display: flex;
     flex-direction: row;
     text-align: center;
-    margin: 15px 10px;
+    justify-content: space-between;
+    margin: 15px 0;
 }
 
 .lisenses p {
-    margin: 0 10px;
     font-size: 1rem;
 }
 
