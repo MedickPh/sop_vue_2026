@@ -26,7 +26,21 @@
       <p class="user_name">{{ userData.name.toUpperCase() }}</p>
       <p class="user_callsign">{{ userData.callsign.toUpperCase() }}</p>
       <p>Фракція</p>
-      <input type="text" id="fractions" autocomplete="off" v-model="userData.fractions">
+      <input type="text" id="fractions" list="fractions_list" autocomplete="off" v-model="userData.fractions">
+      <datalist id="fractions_list">
+        <option value="Долг">Долг</option>
+        <option value="Воля">Воля</option>
+        <option value="Найманці">Найманці</option>
+        <option value="Моноліт">Моноліт</option>
+        <option value="Бандіти">Бандіти</option>
+        <option value="Вільні сталкери">Вільні сталкери</option>
+        <option value="Нейтрали">Нейтрали</option>
+        <option value="Охорона села">Охорона села</option>
+        <option value="Чисте небо">Чисте небо</option>
+        <option value="Ренегати">Ренегати</option>
+        <option value="Вчені">Вчені</option>
+        <option value="Дігери">Дігери</option>
+      </datalist>
       <p>Дата народження - {{ userData.birth_date }}</p>
       <p>Дата прибуття в ЧЗО - {{ userData.arrive_date }}</p>
       <p>Місто</p>
