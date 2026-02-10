@@ -14,11 +14,12 @@
       <p class="user_callsign">{{ userData.callsign.toUpperCase() }}</p>
       <p class="is_wanted" v-if="shortData.is_wanted"> У РОЗШУКУ </p>
       <p v-if="shortData.is_wanted">Причина розшуку: {{ shortData.wanted_reason }}</p>
-      <p :class="{ 'green': userData.license_weapon }">Ліцензія на зброю {{ userData.license_weapon ?
-        userData.license_weapon + ' рівня' : '' }}</p>
-      <p :class="{ 'green': userData.license_fishing }">Ліцензія на риболовлю</p>
-      <p :class="{ 'green': userData.lisence_huntering }">Ліцензія на полювання</p>
-      <p :class="{ 'green': userData.license_artefact }">Ліцензія на артефакти</p>
+      <p :class="{ 'green': userData.license_weapon, 'red': !userData.license_weapon }">Ліцензія на зброю {{
+        userData.license_weapon ?
+          userData.license_weapon + ' рівня' : '' }}</p>
+      <p :class="{ 'green': userData.license_fishing, 'red': !userData.license_fishing }">Ліцензія на риболовлю</p>
+      <p :class="{ 'green': userData.license_huntering, 'red': !userData.license_huntering }">Ліцензія на полювання</p>
+      <p :class="{ 'green': userData.license_artefact, 'red': !userData.license_artefact }">Ліцензія на артефакти</p>
       <p v-if="licenseDate">Ліцензія на перебування дійсна до {{ shortData.license_stay }}</p>
       <button @click="showFullInfo = true">Показати повну інформацію</button>
     </template>
@@ -61,15 +62,19 @@
       </select>
       <div class="lisenses">
         <span>
-          <p :class="{ 'green': userData.license_fishing }">Ліцензія <br> на риболовлю</p>
+          <p :class="{ 'green': userData.license_fishing, 'red': !userData.license_fishing }">Ліцензія <br> на риболовлю
+          </p>
           <input type="checkbox" id="license_fishing" autocomplete="off" v-model="userData.license_fishing">
         </span>
         <span>
-          <p :class="{ 'green': userData.lisence_huntering }">Ліцензія <br> на полювання</p>
-          <input type="checkbox" id="lisence_huntering" autocomplete="off" v-model="userData.lisence_huntering">
+          <p :class="{ 'green': userData.license_huntering, 'red': !userData.license_huntering }">Ліцензія <br> на
+            полювання</p>
+          <input type="checkbox" id="lisence_huntering" autocomplete="off" v-model="userData.license_huntering">
         </span>
         <span>
-          <p :class="{ 'green': userData.license_artefact }">Ліцензія <br> на артефакти</p>
+          <p :class="{ 'green': userData.license_artefact, 'red': !userData.license_artefact }">Ліцензія <br> на
+            артефакти
+          </p>
           <input type="checkbox" id="license_artefact" autocomplete="off" v-model="userData.license_artefact">
         </span>
       </div>
@@ -297,6 +302,10 @@ a {
 
 .green {
   color: rgb(0, 133, 44);
+}
+
+.red {
+  color: rgb(255, 0, 0);
 }
 
 .is_wanted {
