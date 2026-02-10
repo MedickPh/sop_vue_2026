@@ -6,7 +6,21 @@
     <p>Позивний</p>
     <input type="text" id="callsign" required="true" autocomplete="off" v-model="userDataForm.callsign">
     <p>Фракція</p>
-    <input type="text" id="fractions" autocomplete="off" v-model="userDataForm.fractions">
+    <input type="text" id="fractions" list="fractions_list" autocomplete="off" v-model="userDataForm.fractions">
+    <datalist id="fractions_list">
+      <option value="Долг">Долг</option>
+      <option value="Воля">Воля</option>
+      <option value="Найманці">Найманці</option>
+      <option value="Моноліт">Моноліт</option>
+      <option value="Бандіти">Бандіти</option>
+      <option value="Вільні сталкери">Вільні сталкери</option>
+      <option value="Нейтрали">Нейтрали</option>
+      <option value="Охорона села">Охорона села</option>
+      <option value="Чисте небо">Чисте небо</option>
+      <option value="Ренегати">Ренегати</option>
+      <option value="Вчені">Вчені</option>
+      <option value="Дігери">Дігери</option>
+    </datalist>
     <p>Дата народження</p>
     <input type="date" id="birth_date" autocomplete="off" v-model="userDataForm.birth_date">
     <p>Дата прибуття в ЧЗО</p>
@@ -66,39 +80,27 @@ const errorData = ref(null);
 
 function getLicenseDates(dayDate) {
   const timezone = 'Europe/Kyiv'
-
   const now = new Date()
-
   const formatter = new Intl.DateTimeFormat('en-CA', {
     timeZone: timezone,
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   })
-
   const parts = formatter.formatToParts(now)
-
   const getPart = (type) => parts.find((p) => p.type === type).value
-
   const year = getPart('year')
   const month = getPart('month')
   const day = getPart('day')
-
   const startDate = `${year}-${month}-${day}`
-
   const start = new Date(`${startDate}T00:00:00`)
-
   const end = new Date(start)
   end.setDate(end.getDate() + Number(dayDate))
-
   const endParts = formatter.formatToParts(end)
-
   const endYear = endParts.find((p) => p.type === 'year').value
   const endMonth = endParts.find((p) => p.type === 'month').value
   const endDay = endParts.find((p) => p.type === 'day').value
-
   const endDate = `${endYear}-${endMonth}-${endDay}`
-
   return {
     start_date: startDate,
     end_date: endDate,
@@ -150,6 +152,7 @@ const checkUserdata = async () => {
     } else {
       throw new Error('Позивний не може быть пустым')
     }
+
     const createdUser = await createUser(userDataForm.value)
     if (createdUser) {
       router.back()
