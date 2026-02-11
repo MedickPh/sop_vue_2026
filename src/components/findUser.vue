@@ -18,7 +18,7 @@
         userData.license_weapon ?
           userData.license_weapon + ' рівня' : '' }}</p>
       <p :class="{ 'green': userData.license_fishing, 'red': !userData.license_fishing }">Ліцензія на риболовлю</p>
-      <p :class="{ 'green': userData.license_huntering, 'red': !userData.license_huntering }">Ліцензія на полювання</p>
+      <p :class="{ 'green': userData.lisence_huntering, 'red': !userData.lisence_huntering }">Ліцензія на полювання</p>
       <p :class="{ 'green': userData.license_artefact, 'red': !userData.license_artefact }">Ліцензія на артефакти</p>
       <p v-if="licenseDate">Ліцензія на перебування дійсна до {{ shortData.license_stay }}</p>
       <button @click="showFullInfo = true">Показати повну інформацію</button>
@@ -67,9 +67,9 @@
           <input type="checkbox" id="license_fishing" autocomplete="off" v-model="userData.license_fishing">
         </span>
         <span>
-          <p :class="{ 'green': userData.license_huntering, 'red': !userData.license_huntering }">Ліцензія <br> на
+          <p :class="{ 'green': userData.lisence_huntering, 'red': !userData.lisence_huntering }">Ліцензія <br> на
             полювання</p>
-          <input type="checkbox" id="lisence_huntering" autocomplete="off" v-model="userData.license_huntering">
+          <input type="checkbox" id="lisence_huntering" autocomplete="off" v-model="userData.lisence_huntering">
         </span>
         <span>
           <p :class="{ 'green': userData.license_artefact, 'red': !userData.license_artefact }">Ліцензія <br> на
@@ -188,10 +188,11 @@ const sendChangedUserData = async () => {
   try {
     if (userData.value.license_stay === null) {
       userData.value.license_stay = null
-    } else {
+    } else if (typeof userData.value.license_stay !== 'object') {
       const licenseStay = parseInt(userData.value.license_stay)
       userData.value.license_stay = getLicenseDates(licenseStay)
     }
+
     const createdUser = await changeUserData(userData.value.id, userData.value)
     if (createdUser) {
       router.back()
@@ -199,6 +200,7 @@ const sendChangedUserData = async () => {
 
   } catch (err) {
     error.value = err.message;
+
     setTimeout(() => {
       error.value = null;
     }, 2000);
