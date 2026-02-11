@@ -186,9 +186,13 @@ const isDatePassedKyiv = (dateString) => {
 }
 const sendChangedUserData = async () => {
   try {
+    console.log(userData.value)
+
     if (userData.value.license_stay === null) {
+      console.log(userData.value, 'null')
       userData.value.license_stay = null
     } else if (typeof userData.value.license_stay !== 'object') {
+      console.log(userData.value, 'else if object')
       const licenseStay = parseInt(userData.value.license_stay)
       userData.value.license_stay = getLicenseDates(licenseStay)
     }
