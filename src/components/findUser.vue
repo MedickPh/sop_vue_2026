@@ -1,8 +1,8 @@
 <template>
   <errorPopUp v-if="error" :errorMessage="error" />
   <form action="" id="findUser" v-if="!userData" @submit.prevent="submit">
-    <p>ПІБ</p>
-    <input type="text" id="name" autocomplete="off" v-model="form.name">
+    <!-- <p>ПІБ</p>
+    <input type="text" id="name" autocomplete="off" v-model="form.name"> -->
     <p>Позивний</p>
     <input type="text" id="callsign" required="true" autocomplete="off" v-model="form.callsign">
     <button type="submit" :disabled="loading">Знайти</button>
