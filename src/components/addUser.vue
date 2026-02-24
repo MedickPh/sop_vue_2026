@@ -1,5 +1,6 @@
 <template>
   <errorPopUp v-if="errorData" :errorMessage="errorData" />
+  <addUserPopup v-if="addUserPopupData" :addUserData="addUserPopupData" />
   <form action="" id="addUser" @submit.prevent="checkUserdata">
     <p>ПІБ</p>
     <input type="text" id="name" autocomplete="off" v-model="userDataForm.name">
@@ -74,9 +75,11 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { useUsers } from '@/composables/useUsers';
 import errorPopUp from './errorPopUp.vue';
+import addUserPopup from './addUserPopup.vue';
 const { createUser, loading } = useUsers();
 const router = useRouter()
 const errorData = ref(null);
+const addUserPopupData = ref(null);
 
 function getLicenseDates(dayDate) {
   const timezone = 'Europe/Kyiv'
@@ -155,7 +158,12 @@ const checkUserdata = async () => {
 
     const createdUser = await createUser(userDataForm.value)
     if (createdUser) {
-      router.back()
+      addUserPopupData.value = createdUser.callsign
+      setTimeout(() => {
+        addUserPopupData.value = null;
+        router.back()
+      }, 2000);
+
     } else {
       throw new Error('Користувач з таким позивним вже існує')
     }
